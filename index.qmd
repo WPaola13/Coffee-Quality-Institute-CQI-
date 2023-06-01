@@ -1,0 +1,102 @@
+---
+title: "Análisis del conjunto de datos de
+         Coffee Quality Institute (CQI)"
+format: html
+editor: visual
+---
+
+## Introducción
+
+En el siguiente trabajo se centrará en el análisis exploratorio del conjunto de datos proporcionado por Coffee Quality Institute (CQI). La CQI es una organización reconocida internacionalmente que se dedica a mejorar la calidad del café en todo el mundo. Para ello, se hara uso del [repositorio de Fatih Boyar en GitHub](https://github.com/gf0604-procesamientodatosgeograficos/2023-i/blob/main/datos/cqi/coffee-quality.csv), que contiene valiosa información sobre la calidad del café y será el punto de partida para nuestro análisis.
+
+El objetivo principal de este trabajo es a partir del análisis exploratorio de los datos presentar visualizaciones relevantes. Para ello, se utilizará una variedad de gráficos y técnicas de visualización de datos como el histograma, el gráfico de dispersión y el gráfico de caja. Estas herramientas nos brindarán información importante sobre la calidad del café y las posibles relaciones entre las variables estudiadas.
+
+## I Parte. Carga de Datos y Paquetes
+
+#### *Carga de paquetes*
+
+```{r message=FALSE}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(plotly)
+library(DT)
+library(ggthemes)
+library(hrbrthemes)
+```
+
+#### *Carga de datos desde un archivo csv*
+
+```{r message=FALSE}
+coffee_quality <- read_csv("coffee-quality.csv")
+
+View(coffee_quality)
+
+```
+
+## II Parte. Tabla de Datos
+
+```{r}
+ coffee_quality |>
+  datatable(
+    options = list(
+      pageLength = 5,
+      language = list(url = 'https://github.com/gf0604-procesamientodatosgeograficos/2023-i/blob/main/datos/cqi/coffee-quality.csv')
+    )
+  )
+```
+
+## III Parte. Gráficos estadísticos
+
+#### *Histograma*
+
+El siguiente histograma ilustra la distribución de la variable **Total_Cup_Points**, proporcionando una visión general de cómo se distribuyen los puntajes totales de las muestras de café.
+
+```{r}
+
+```
+
+#### *Gráfico de dispersión*
+
+Este gráfico permite analizar si existe alguna correlación entre la **Altitud** de cultivo (eje x) y la calidad del café, representada por el **Puntaje Total** (eje y) de las muestras de cafe.
+
+```{r}
+plot(
+  coffee_quality$Altitude, 
+  coffee_quality$Total_Cup_Points,
+  main='Relación entre la Altitud y el Puntaje Total de las muestras de cafe',
+  xlab='Altitud',
+  ylab='Puntaje Total'
+)
+```
+
+```{r}
+ggplot(coffee_quality, aes(x = Altitude, y = Total_Cup_Points)) +
+  ggtitle('Relación entre la Altitud y el Puntaje Total de las muestras de cafe') +
+  xlab('Altitud (msnm') +
+  ylab('Puntaje Total') +
+  geom_point()
+```
+
+
+```{r}
+# Gráfico de dispersión de peso vs precio de diamantes
+# coloreado por claridad
+coffee_quality |>
+  ggplot(aes(x = Altitude, y = Total_Cup_Points)) +
+  geom_point() +
+  ggtitle("Relación entre la Altitud y el Puntaje Total de las muestras de cafe") +
+  xlab("Altitud (msnm)") +
+  ylab("Puntaje Total") +
+  scale_colour_brewer(palette = "YlOrBr", direction = -1) +
+  theme_igray() 
+```
+
+
+#### *Gráfico de Caja*
+
+El siguiente gráfico muestra las estadísticas clave (cuartiles, mínimos, máximos y valores atípicos) de la variable **Total_Cup_Points** para cada valor de la variable **Color**. Esta visualización permite analizar cómo se distribuyen los puntajes totales en relación con los diferentes colores de café.
+
+```{r}
+
+```
